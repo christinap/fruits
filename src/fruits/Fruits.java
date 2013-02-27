@@ -1,14 +1,16 @@
 package fruits;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import processing.core.PApplet;
 
 public class Fruits extends PApplet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3431077856221134227L;
 	FruitChart chart;
-	ArrayList allFruits = new ArrayList();
+	ArrayList<String> allFruits = new ArrayList<String>();
 	
 	static int width = 800;
 	static int height = 600;
@@ -19,6 +21,8 @@ public class Fruits extends PApplet {
 	
 	int dataMin = 0;
 	int dataMax;
+	
+	int yLabelAreaWidth;
 	
 	public void setup() {
 		size(width, height);
@@ -34,6 +38,8 @@ public class Fruits extends PApplet {
 		
 		chart = new FruitChart(this);
 		
+		yLabelAreaWidth = chart.getYLabelArea(100);		
+		
 		headers = chart.getHeaders(allFruits.get(0));
 		
 		dataMin = chart.getMinData(allFruits);
@@ -45,58 +51,10 @@ public class Fruits extends PApplet {
 		noLoop();
 
 		chart.drawAxis("x","bottom",new int[] {0,width},50);
-
 		chart.drawAxis("x","top",new int[] {0,width},50);
-		
-		chart.drawAxis("y","left",new int[] {0,height},0);
-		
+		chart.drawAxis("y","left",new int[] {0,height},0);		
 		chart.drawBar(allFruits);
+	
 	}
 	
 }
-
-/*
-String[] items = {"apples", "oranges", "bananas"};
-float[] weight = {200, 120, 450};
-float[] sales = {320, 85, 198};
-float[] profit = {130, 33, 99};
-
-color backgroundColor = #F2EC99;
-color weightColor = #F25050;
-color salesColor = #67BFAD;
-color profitColor = #1D3C42;
-
-
-void setup() {
-  size(460,300);
-  smooth();
-  background(backgroundColor);
-}
-
-void draw() {
-
-//weight rectangles
-  int y = 0;
-  for (int i=0; i<weight.length; i++, y+=100) {
-     fill(weightColor);
-     rect(0, y, weight[i], 20);
-  };
-  
-  //sales rectangles
-  y = 20;
-  for (int i=0; i<sales.length; i++, y+=100) {
-     fill(salesColor);
-     rect(0, y, sales[i], 20);
-  };
-  
-  //profit rectangles
-  y = 40;
-  for (int i=0; i<profit.length; i++, y+=100) {
-     fill(profitColor);
-     rect(0, y, profit[i], 20);
-  }
-  
- 
-}//close draw
-
-*/

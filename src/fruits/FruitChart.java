@@ -1,21 +1,21 @@
 package fruits;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import processing.core.PApplet;
-import processing.core.*;
-//import processing.opengl.*;
-
-//import processing.opengl.PGraphics2D;
-
-//import fruits.Fruits;
 
 public class FruitChart extends PApplet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4632674911541420209L;
+
 	int width = fruits.Fruits.width;
 	int height = fruits.Fruits.height;
+	
+	int yLabelAreaWidth;
 	
 	int[] barColors = fruits.Fruits.barColors;
 	
@@ -26,34 +26,31 @@ public class FruitChart extends PApplet {
 	
 	int tickGap = 0;
 	
+	int marginRight;
+	
 	PApplet pa;
 			
 	FruitChart(PApplet p) {
 		pa = p;
 		
+		this.marginRight = pa.width-100;
 	}	
 	
 	void drawAxis(String axis, String position, int[] range, int interval) {
-		//println(range[1]);
-		
-		//println(height);
 		
 		if(axis == "x") {
 			if(position == "bottom") {
 				pa.stroke(0,0,0);
 				pa.strokeWeight(1);
-				pa.line(100,height-50,width-100,height-50);
-				
-				//int ticks = (range[1]-range[0]-100) / interval;
+				pa.line(this.yLabelAreaWidth,pa.height -50,this.marginRight,pa.height-50);
+
 				int ticks = dataMax / interval;
 				tickGap = (range[1]-range[0]-230) / ticks;
-						
-				//println(ticks +  " : " + dataMax + " : " + interval + " : " + ticksGap);
 				
 				for(int i=0; i< ticks+1; i++) {
 					int x1 = tickGap*(i+1)+30;
 					int x2 = x1;
-					int y1 = height-55;
+					int y1 = pa.height-55;
 					int y2 = y1+10;
 					
 					int tickLabel = interval*i;
@@ -72,7 +69,7 @@ public class FruitChart extends PApplet {
 			else if(position == "top") {
 				pa.stroke(0,0,0);
 				pa.strokeWeight(1);
-				pa.line(100,50,width-100,50);	
+				pa.line(this.yLabelAreaWidth,50,this.marginRight,50);	
 				
 				int ticks = dataMax / interval;
 				tickGap = (range[1]-range[0]-230) / ticks;
@@ -101,40 +98,33 @@ public class FruitChart extends PApplet {
 			if(position == "left") {
 				pa.stroke(0,0,0);
 				pa.strokeWeight(1);
-				pa.line(100,50,100,height-50);
+				pa.line(this.yLabelAreaWidth,50,100,height-50);
 				
 				if(interval == 0) {
 					pa.fill(0);
 					pa.textSize(18);
 					pa.text("Apples", 20, 150);
 					pa.text("Oranges", 20, 300);
-					pa.text("Banans", 20, 450);
+					pa.text("Bananas", 20, 450);
 				}
 			}
 			else if(position == "right") {
 				
 			}
 		}
-		
 	}
 	
-	void drawBar(ArrayList data) {
-		/*
-		allFruits.add("category,apples,oranges,bananas");
-		allFruits.add("weight,200,120,450");
-		allFruits.add("sales,320,85,198");
-		allFruits.add("profit,130,33,99");
-		*/
+	void drawBar(ArrayList<?> data) {
 		
 		for(int i=0,len=data.size();i<len;i++) {
 			if(i>0) {
 				String[] myData = split((String) data.get(i),",");
 				
 				for(int j=1, len2=myData.length;j<len2;j++) {
-					int x = 100;
+					int x = this.yLabelAreaWidth;
 					int y = (j-1)*160+40 + (i*40);
 					int value = Integer.parseInt(myData[j]);
-					float rValue = pa.map(value, 0, 50, 0, tickGap) ;
+					float rValue = PApplet.map(value, 0, 50, 0, tickGap) ;
 							
 					pa.fill(barColors[i-1]);
 					pa.rect(x, y, rValue-7, 40);
@@ -178,7 +168,7 @@ public class FruitChart extends PApplet {
 		return dataMin;
 	}	
 	
-	int getMaxData(ArrayList data) {
+	int getMaxData(ArrayList<?> data) {
 		
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		
@@ -197,5 +187,12 @@ public class FruitChart extends PApplet {
 		
 		return dataMax;
 	}
+	
+	int getYLabelArea(int yLabelAreaWidth) {
 		
+		this.yLabelAreaWidth = yLabelAreaWidth;
+		
+		return yLabelAreaWidth;
+	}
+
 }
