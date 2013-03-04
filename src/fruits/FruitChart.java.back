@@ -22,13 +22,10 @@ public class FruitChart extends PApplet {
 	
 	int[] barColors = fruits.Fruits.barColors;
 	
-	ArrayList data;
-	
 	String[] headers;
 	
 	int dataMin = 0;
 	int dataMax;
-	int dataNumCategory;
 	
 	int tickGap = 0, tickSize = 10;
 	int tickLabelLeft = 10, tickLabelTop = 15;
@@ -39,12 +36,9 @@ public class FruitChart extends PApplet {
 	int rangeDummy;
 	int tickDummy = 30;
 	
-	int axisStroke = 1, axisLabelRight = 20, axisLabelLeft = 20;
-	int yAxisLabelSize = 18;
+	int axisStroke = 1, axisLabelRight = 20;;
 	
 	int triangleHeight = tickSize;
-	
-	int barWidth = 40, barLabelLeft = 5;
 	
 	PApplet pa;
 			
@@ -93,7 +87,8 @@ public class FruitChart extends PApplet {
 				}
 				
 				pa.text("$ (profit)", width-(marginRight-axisLabelRight), height-(marginBottom-tickSize/2));
-								
+				
+				//pa.triangle(width-100,height-45,width-100,height-55,width-90,height-50);
 				pa.triangle(width-marginRight,height-(marginBottom-triangleHeight/2),width-marginRight,height-(marginBottom+triangleHeight/2),width-(marginRight-triangleHeight),height-marginBottom);
 			}
 			else if(position == "top") {
@@ -119,8 +114,9 @@ public class FruitChart extends PApplet {
 					}
 				}
 				
-				pa.text("lb (weight)", width-(marginRight-axisLabelRight), marginTop+tickSize/2);
-
+				pa.text("lb (weight)", width-80, 53);
+				
+				//pa.triangle(width-100,55,width-100,45,width-90,50);
 				pa.triangle(width-marginRight,(marginTop+triangleHeight/2),width-marginRight,(marginTop-triangleHeight/2),width-(marginRight-triangleHeight),marginTop);
 			}
 		}
@@ -130,18 +126,12 @@ public class FruitChart extends PApplet {
 				pa.strokeWeight(1);
 				pa.line(yLabelAreaWidth,marginTop,yLabelAreaWidth,height-marginBottom);
 				
-				int yLabelInitPosition = this.height/(this.data.size()-1)-marginTop;
-				
 				if(interval == 0) {
 					pa.fill(0);
-					pa.textSize(yAxisLabelSize);
-
-					String[] row = split((String) this.data.get(0), ",");
-					this.dataNumCategory = row.length-1;
-					println(row);
-					for(int k=0,len=this.dataNumCategory;k<len;k++) {
-						pa.text(row[k+1], this.axisLabelLeft, yLabelInitPosition*(k+1));
-					}
+					pa.textSize(18);
+					pa.text("Apples", 20, 150);
+					pa.text("Oranges", 20, 300);
+					pa.text("Bananas", 20, 450);
 				}
 			}
 			else if(position == "right") {
@@ -150,7 +140,7 @@ public class FruitChart extends PApplet {
 		}
 	}
 	
-	protected void drawBar(ArrayList<?> data) {
+	void drawBar(ArrayList<?> data) {
 		
 		for(int i=0,len=data.size();i<len;i++) {
 			if(i>0) {
@@ -158,12 +148,12 @@ public class FruitChart extends PApplet {
 				
 				for(int j=1, len2=myData.length;j<len2;j++) {
 					int x = this.yLabelAreaWidth;
-					int y = (j-1)*(this.height/this.dataNumCategory-marginTop)+this.barWidth + (i*this.barWidth);
+					int y = (j-1)*160+40 + (i*40);
 					int value = Integer.parseInt(myData[j]);
-					float rValue = PApplet.map(value, 0, this.interval, 0, this.tickGap) ;
+					float rValue = PApplet.map(value, 0, this.interval, 0, tickGap) ;
 					
 					pa.fill(barColors[i-1]);
-					pa.rect(x, y, rValue-this.barLabelLeft, this.barWidth);
+					pa.rect(x, y, rValue-7, 40);
 					
 					pa.fill(0);
 					pa.textSize(12);
@@ -173,7 +163,7 @@ public class FruitChart extends PApplet {
 		}
 	}
 	
-	protected String[] getHeaders(Object data) {
+	String[] getHeaders(Object data) {
 		
 		String[] myData = split((String) data, ",");
 		for(int i=1, len=myData.length; i<len; i++) {
@@ -184,7 +174,7 @@ public class FruitChart extends PApplet {
 		return headers;
 	}
 	
-	protected int getMinData(ArrayList<String> data) {
+	int getMinData(ArrayList<String> data) {
 		
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		
@@ -204,7 +194,7 @@ public class FruitChart extends PApplet {
 		return dataMin;
 	}	
 	
-	protected int getMaxData(ArrayList<?> data) {
+	int getMaxData(ArrayList<?> data) {
 		
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		
@@ -224,7 +214,7 @@ public class FruitChart extends PApplet {
 		return dataMax;
 	}
 	
-	protected int getYLabelArea(int yLabelAreaWidth) {
+	int getYLabelArea(int yLabelAreaWidth) {
 		
 		this.yLabelAreaWidth = yLabelAreaWidth;
 		this.rangeDummy = yLabelAreaWidth + this.marginRight + this.tickDummy;
@@ -232,14 +222,10 @@ public class FruitChart extends PApplet {
 		return yLabelAreaWidth;
 	}
 	
-	protected int getInterval(int interval) {
+	int getInterval(int interval) {
 		this.interval = interval;
 		
 		return interval;
-	}
-	
-	protected void setData(ArrayList<?> data) {
-		this.data = data;	
 	}
 
 }
