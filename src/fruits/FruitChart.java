@@ -27,7 +27,7 @@ public class FruitChart extends PApplet {
 	String[] headers;
 	
 	int dataMin = 0;
-	int dataMax;
+	int dataMax; 
 	int dataNumCategory;
 	
 	int tickGap = 0, tickSize = 10;

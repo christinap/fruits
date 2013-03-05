@@ -16,7 +16,7 @@ public class Fruits extends PApplet {
 	private static final long serialVersionUID = -3431077856221134227L;
 	FruitChart chart;
 	ArrayList<String> allFruits = new ArrayList<String>();
-	
+	 
 	protected static int width = 800;
 	protected static int height = 600;
 	
